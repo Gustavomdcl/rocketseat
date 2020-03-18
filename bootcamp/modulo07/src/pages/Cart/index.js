@@ -8,12 +8,12 @@ import * as CartActions from '../../store/modules/cart/actions';
 
 import { Container, ProductTable, Total } from './styles';
 
-function Cart({cart,total,removeFromCart,updateAmountCart}) {
+function Cart({cart,total,removeFromCart,updateAmountCartRequest}) {
   function increment(product){
-    updateAmountCart(product.id,product.amount+1);
+    updateAmountCartRequest(product.id,product.amount+1);
   }
   function decrement(product){
-    updateAmountCart(product.id,product.amount-1);
+    updateAmountCartRequest(product.id,product.amount-1);
   }
   return (
     <Container>
