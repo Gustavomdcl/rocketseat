@@ -3,7 +3,10 @@ export default function cart(state=[],action){
     case 'ADD_TO_CART':
       return [
         ...state,
-        action.product
+        {
+          ...action.product,
+          amount: 1
+        }
       ];
     default:
       return state;
