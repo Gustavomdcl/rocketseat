@@ -1,18 +1,18 @@
-import React, {useState, useEffect, useMemo} from 'react';
+import React, {useState, useEffect, useMemo, useCallback} from 'react';
 
 function App() {
   const [techs,setTech] = useState([]);
   const [newTech,setNewTech] = useState('');
-  function handleAdd(){
+  const handleAdd = useCallback(()=>{
     setTech([
       ...techs,
       newTech
     ]);
     setNewTech('');
-  }
-  function handleChange(e){
+  },[techs,newTech]);
+  const handleChange = useCallback((e)=>{
     setNewTech(e.target.value);
-  }
+  },[]);
   useEffect(()=>{
     const storageTechs = localStorage.getItem('techs');
     if(storageTechs){
@@ -22,7 +22,7 @@ function App() {
   },[]);
 
   const techSize = useMemo(()=>techs.lenght,[techs]);
-  // Muda somente se a techs mudar...
+  // Chama somente se a techs mudar...
 
   useEffect(()=>{
     localStorage.setItem('techs',JSON.stringify(techs));
