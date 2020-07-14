@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react';
-import {View,SafeAreaView,ScrollView,FlatList,Text,StyleSheet,StatusBar} from 'react-native';
+import {View,SafeAreaView,ScrollView,FlatList,Text,StyleSheet,StatusBar,Button,TouchableOpacity} from 'react-native';
 
 import api from './services/api';
 
@@ -10,9 +10,13 @@ import api from './services/api';
 
 // View: div, footer, header, main, aside, section
 // Text: p, span, strong, h1, h2, h3
-// FlatList: Listas
-
-// ScrollView criar scroll
+// FlatList: Listas otimizadas com scroll
+// Button: Botão com estilização própria dependendo do sistema
+// Touchable: Todos que iniciam com esse são estilizáveis
+//   TouchableOpacity: Fica levemente transparente quando clica
+// StyleSheet: Estilos
+// SafeAreaView: Não pega ali no Status bar
+// ScrollView: Criar scroll
 
 export default function App(){
   const [projects,setProjects] = useState([]);
@@ -22,6 +26,13 @@ export default function App(){
       setProjects(response.data);
     });
   },[]);
+  async function handleAddProject(){
+    const response = await api.post('projects',{
+      title: `Novo Projeto ${Date.now()}`,
+      owner: 'Gustavo Lima'
+    });
+    setProjects([...projects,response.data]);
+  }
   return (<>
     <StatusBar barStyle="light-content" backgroundColor="#7159c1" />
 
@@ -32,6 +43,9 @@ export default function App(){
         keyExtractor={project=>project.id}
         renderItem={({item:project})=>(<Text style={styles.project}>{project.title}</Text>)}
       />
+      <TouchableOpacity activeOpacity={0.6} style={styles.button} onPress={handleAddProject}>
+        <Text style={styles.buttonText}>Adicionar projeto</Text>
+      </TouchableOpacity>
     </SafeAreaView>
 
     {/* <View style={styles.container}>
@@ -58,5 +72,19 @@ const styles = StyleSheet.create({
   project: {
     color: '#fff',
     fontSize: 20,
+  },
+  button: {
+    alignSelf: 'stretch',
+    backgroundColor: '#fff',
+    margin: 20,
+    height: 50,
+    borderRadius: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    fontWeight: 'bold',
+    fontSize: 16,
+
   },
 });
