@@ -8,6 +8,7 @@ import api from './services/api';
 // Todos os componentes por padrão possuem "display: flex;"
 // Estilos não possuem hierarquia
 
+// StatusBar: Valores do status bar
 // View: div, footer, header, main, aside, section
 // Text: p, span, strong, h1, h2, h3
 // FlatList: Listas otimizadas com scroll
